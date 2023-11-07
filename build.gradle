@@ -30,6 +30,12 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:2.3.1'
+
+    // https://mvnrepository.com/artifact/org.spockframework/spock-core
+    testImplementation 'org.spockframework:spock-core:2.4-M1-groovy-4.0'
+    // https://mvnrepository.com/artifact/org.spockframework/spock-spring
+    testImplementation 'org.spockframework:spock-spring:2.4-M1-groovy-4.0'
+
 }
 
 tasks.named('test') {
