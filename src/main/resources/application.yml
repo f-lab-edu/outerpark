@@ -1,1 +1,15 @@
-
+mybatis:
+  mapper-locations: classpath:mapper/**/*.xml
+spring:
+  profiles:
+    active: dev
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/outerpark
+    username: root
+    password:
