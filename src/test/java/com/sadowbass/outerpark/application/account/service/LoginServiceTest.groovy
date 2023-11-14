@@ -52,15 +52,15 @@ class LoginServiceTest extends Specification {
 
     def "로그인 실패. PW 불일치"() {
         given:
-        def forTest = new Account()
-        forTest.email = loginRequest.email
-        forTest.password = "wrong password"
+        def testAccount = new Account()
+        testAccount.email = loginRequest.email
+        testAccount.password = "wrong password"
 
         when:
         loginService.login(loginRequest)
 
         then:
-        accountRepository.findByEmail(loginRequest.email) >> forTest
+        accountRepository.findByEmail(loginRequest.email) >> testAccount
         thrown(InvalidLoginInformationException.class)
     }
 }

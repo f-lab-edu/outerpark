@@ -29,7 +29,7 @@ public class LoginService {
             throw new NoSuchAccountDataException();
         }
 
-        if (!loginRequest.getEmail().equals(account.getEmail()) || !loginRequest.getPassword().equals(account.getPassword())) {
+        if (!loginRequest.getPassword().equals(account.getPassword())) {
             throw new InvalidLoginInformationException();
         }
     }
