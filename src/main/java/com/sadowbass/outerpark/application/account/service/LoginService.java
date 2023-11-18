@@ -5,6 +5,7 @@ import com.sadowbass.outerpark.application.account.dto.LoginResult;
 import com.sadowbass.outerpark.application.account.exception.InvalidLoginInformationException;
 import com.sadowbass.outerpark.application.account.exception.NoSuchAccountDataException;
 import com.sadowbass.outerpark.application.account.repository.AccountRepository;
+import com.sadowbass.outerpark.infra.utils.PasswordUtils;
 import com.sadowbass.outerpark.presentation.dto.account.LoginRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -29,7 +30,7 @@ public class LoginService {
             throw new NoSuchAccountDataException();
         }
 
-        if (!loginRequest.getPassword().equals(account.getPassword())) {
+        if (!PasswordUtils.verify(loginRequest.getPassword(), account.getPassword())) {
             throw new InvalidLoginInformationException();
         }
     }

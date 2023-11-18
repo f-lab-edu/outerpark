@@ -1,9 +1,11 @@
 package com.sadowbass.outerpark.application.account.service
 
+
 import com.sadowbass.outerpark.application.account.Account
 import com.sadowbass.outerpark.application.account.exception.InvalidLoginInformationException
 import com.sadowbass.outerpark.application.account.exception.NoSuchAccountDataException
 import com.sadowbass.outerpark.application.account.repository.AccountRepository
+import com.sadowbass.outerpark.infra.utils.PasswordUtils
 import com.sadowbass.outerpark.presentation.dto.account.LoginRequest
 import spock.lang.Shared
 import spock.lang.Specification
@@ -17,8 +19,8 @@ class LoginServiceTest extends Specification {
     LoginRequest loginRequest
 
     def setupSpec() {
-        loginRequest = new LoginRequest();
-        loginRequest.email = "test@gmail.com";
+        loginRequest = new LoginRequest()
+        loginRequest.email = "test@gmail.com"
         loginRequest.password = "password"
     }
 
@@ -35,7 +37,7 @@ class LoginServiceTest extends Specification {
         accountRepository.findByEmail(loginRequest.email) >> {
             def account = new Account()
             account.email = "test@gmail.com"
-            account.password = "password"
+            account.password = PasswordUtils.encode("password")
 
             return account
         }

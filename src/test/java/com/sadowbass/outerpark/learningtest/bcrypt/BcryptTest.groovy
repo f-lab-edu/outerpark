@@ -7,9 +7,9 @@ class BcryptTest extends Specification {
 
     def "bcrypt library 테스트"() {
         given:
-        def originalPassword1 = "1234";
-        def originalPassword2 = "string";
-        def originalPassword3 = "combine123@!";
+        def originalPassword1 = "1234"
+        def originalPassword2 = "string"
+        def originalPassword3 = "combine123@!"
 
         when:
         def hash1 = BCrypt.withDefaults().hashToString(10, originalPassword1.toCharArray())
