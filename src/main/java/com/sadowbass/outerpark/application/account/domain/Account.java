@@ -1,4 +1,4 @@
-package com.sadowbass.outerpark.application.account;
+package com.sadowbass.outerpark.application.account.domain;
 
 import com.sadowbass.outerpark.application.BaseEntity;
 import lombok.Getter;

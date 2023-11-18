@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sadowbass.outerpark.infra.repository.ProductRepositoryMapper">
+    <select id="findProductInfoByProductId" parameterType="long">
+        SELECT p.id             AS id,
+               h.name           AS hallName,
+               MIN(r.date_time) AS firstDate,
+               MAX(r.date_time) AS lastDate,
+               p.name           AS name,
+               p.`describe`     AS `describe`,
+               p.running_time   AS runningTime
+        FROM PRODUCTS p
+                 JOIN HALL h ON p.hall_id = h.id
+                 JOIN ROUNDS r ON r.product_id = p.id
+        WHERE p.id = #{productId}
+        GROUP BY p.id, h.name, p.name, p.`describe`, p.running_time
+    </select>
+</mapper>
