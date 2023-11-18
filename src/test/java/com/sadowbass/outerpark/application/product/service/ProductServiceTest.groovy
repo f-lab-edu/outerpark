@@ -10,7 +10,7 @@ class ProductServiceTest extends Specification {
 
     def "공연 조회 성공"() {
         given:
-        ProductRepository productRepository = Mock(ProductRepository.class);
+        ProductRepository productRepository = Mock(ProductRepository.class)
         def productService = new ProductService(productRepository)
         def productId = 1L
 
@@ -32,7 +32,7 @@ class ProductServiceTest extends Specification {
 
     def "공연 조회 실패, 존재하지 않는 productId"() {
         given:
-        ProductRepository productRepository = Mock(ProductRepository.class);
+        ProductRepository productRepository = Mock(ProductRepository.class)
         def productService = new ProductService(productRepository)
         def productId = 2L
 

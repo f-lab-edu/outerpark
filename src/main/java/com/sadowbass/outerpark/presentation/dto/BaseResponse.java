@@ -6,8 +6,8 @@ import org.springframework.http.HttpStatus;
 @Getter
 public class BaseResponse {
 
-    private int responseCode;
-    private String responseMessage;
+    private final int responseCode;
+    private final String responseMessage;
 
     private static final String DEFAULT_OK_MESSAGE = "ok";
 
