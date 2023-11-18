@@ -5,6 +5,7 @@ import com.sadowbass.outerpark.application.account.service.AccountService;
 import com.sadowbass.outerpark.presentation.dto.BaseResponse;
 import com.sadowbass.outerpark.presentation.dto.account.SignUpRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -20,8 +21,9 @@ public class AccountController {
         return BaseResponse.ok();
     }
 
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(DuplicateEmailException.class)
     public BaseResponse handleDuplicateEmailException(DuplicateEmailException duplicateEmailException) {
-        return new BaseResponse(400, duplicateEmailException.getMessage());
+        return new BaseResponse(HttpStatus.BAD_REQUEST.value(), duplicateEmailException.getMessage());
     }
 }

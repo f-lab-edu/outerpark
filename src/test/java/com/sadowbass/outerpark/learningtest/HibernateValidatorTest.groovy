@@ -6,6 +6,7 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.context.ApplicationContext
 import spock.lang.Specification
 
+import javax.validation.ConstraintViolation
 import javax.validation.Validator
 
 @SpringBootTest
@@ -40,14 +41,29 @@ class HibernateValidatorTest extends Specification {
         inCorrectRequest.setEmail("test2test.com")
 
         when:
-        def unCorrectValidate = validator.validate(inCorrectRequest)
+        def inCorrectValidate = validator.validate(inCorrectRequest)
 
         then:
-        unCorrectValidate.size() == 1
+        inCorrectValidate.size() == 1
 
-        for (def each in unCorrectValidate) {
+        for (def each in inCorrectValidate) {
             println "each = $each"
         }
     }
 
+    def "test violation properties"() {
+        given:
+        SignUpRequest inCorrectRequest = new SignUpRequest()
+        inCorrectRequest.setEmail("test2test.com")
+
+        when:
+        def inCorrectValidate = validator.validate(inCorrectRequest)
+
+        then:
+        for (ConstraintViolation<SignUpRequest> valid : inCorrectValidate) {
+            println(valid.getInvalidValue())
+            println(valid.getMessage())
+            println(valid.getPropertyPath())
+        }
+    }
 }
