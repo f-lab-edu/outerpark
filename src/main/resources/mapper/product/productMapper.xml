@@ -1,18 +1,51 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.sadowbass.outerpark.infra.repository.ProductRepositoryMapper">
+<mapper namespace="com.sadowbass.outerpark.infra.mapper.ProductRepositoryMapper">
     <select id="findProductInfoByProductId" parameterType="long">
         SELECT p.id             AS id,
-               h.name           AS hallName,
-               MIN(r.date_time) AS firstDate,
-               MAX(r.date_time) AS lastDate,
+               h.name           AS hall_name,
+               MIN(r.date_time) AS first_date,
+               MAX(r.date_time) AS last_date,
                p.name           AS name,
                p.`describe`     AS `describe`,
-               p.running_time   AS runningTime
+               p.running_time   AS running_time
         FROM PRODUCTS p
                  JOIN HALL h ON p.hall_id = h.id
                  JOIN ROUNDS r ON r.product_id = p.id
         WHERE p.id = #{productId}
         GROUP BY p.id, h.name, p.name, p.`describe`, p.running_time
+    </select>
+
+    <resultMap id="roundInfos" type="RoundInfo">
+        <id property="id" column="round_id"/>
+        <result property="dateTime" column="date_time"/>
+        <collection property="gradeRemains" ofType="GradeRemain">
+            <result property="id" column="grade_id"/>
+            <result property="name" column="grade_name"/>
+            <result property="remain" column="remain"/>
+        </collection>
+    </resultMap>
+
+    <select id="findRoundInfosByProductId" parameterType="long" resultMap="roundInfos">
+        SELECT r.id                                AS round_id,
+               r.date_time                         AS date_time,
+               g.id                                AS grade_id,
+               g.name                              AS grade_name,
+               SUM(IF(rs.status = 'enable', 1, 0)) AS remain
+        FROM ROUNDS r
+                 JOIN ROUND_SEATS rs ON rs.round_id = r.id
+                 JOIN GRADES g ON g.id = rs.grade_id
+        WHERE r.product_id = #{productId}
+        GROUP BY r.id, r.date_time, g.id, g.name
+    </select>
+
+    <select id="findAvailableSeatByRoundIdAndGradeId" resultType="AvailableSeat">
+        SELECT g.id,
+               s.name AS seat_name
+        FROM ROUND_SEATS rs
+                 JOIN SEATS s ON s.id = rs.seat_id
+                 JOIN ROUNDS r ON r.id = rs.round_id AND r.id = #{roundId}
+                 JOIN GRADES g ON g.id = rs.grade_id AND g.id = #{gradeId}
+        WHERE rs.status = 'enable';
     </select>
 </mapper>

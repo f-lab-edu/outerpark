@@ -1,6 +1,5 @@
 package com.sadowbass.outerpark.application.product.service
 
-
 import com.sadowbass.outerpark.application.product.dto.ProductInfo
 import com.sadowbass.outerpark.application.product.exception.NoSuchProductException
 import com.sadowbass.outerpark.application.product.repository.ProductRepository
@@ -15,7 +14,7 @@ class ProductServiceTest extends Specification {
         def productId = 1L
 
         when:
-        ProductInfo productInfo = productService.findProductInfoByProductId(productId)
+        productService.findProductInfoByProductId(productId)
 
         then:
         productRepository.findProductInfoByProductId(productId) >> {
@@ -37,7 +36,7 @@ class ProductServiceTest extends Specification {
         def productId = 2L
 
         when:
-        ProductInfo productInfo = productService.findProductInfoByProductId(productId)
+        productService.findProductInfoByProductId(productId)
 
         then:
         productRepository.findProductInfoByProductId(productId) >> null

@@ -9,7 +9,7 @@ public class BaseResponse {
     private final int responseCode;
     private final String responseMessage;
 
-    private static final String DEFAULT_OK_MESSAGE = "ok";
+    protected static final String DEFAULT_OK_MESSAGE = "ok";
 
     public BaseResponse(int responseCode, String responseMessage) {
         this.responseCode = responseCode;
@@ -17,6 +17,6 @@ public class BaseResponse {
     }
 
     public static BaseResponse ok() {
-        return new BaseResponse(HttpStatus.OK.value(), "ok");
+        return new BaseResponse(HttpStatus.OK.value(), DEFAULT_OK_MESSAGE);
     }
 }
