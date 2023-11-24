@@ -16,14 +16,14 @@ public class AccountController {
     private final AccountService accountService;
 
     @PostMapping
-    public BaseResponse signUp(@RequestBody SignUpRequest signUpRequest) {
+    public BaseResponse<Void> signUp(@RequestBody SignUpRequest signUpRequest) {
         accountService.signUp(signUpRequest);
         return BaseResponse.ok();
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(DuplicateEmailException.class)
-    public BaseResponse handleDuplicateEmailException(DuplicateEmailException duplicateEmailException) {
-        return new BaseResponse(HttpStatus.BAD_REQUEST.value(), duplicateEmailException.getMessage());
+    public BaseResponse<Void> handleDuplicateEmailException(DuplicateEmailException duplicateEmailException) {
+        return new BaseResponse<>(HttpStatus.BAD_REQUEST.value(), duplicateEmailException.getMessage(), null);
     }
 }

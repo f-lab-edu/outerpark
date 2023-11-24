@@ -14,10 +14,6 @@ class ProductServiceTest extends Specification {
         def productService = new ProductService(productRepository)
         def productId = 1L
 
-        when:
-        ProductInfo productInfo = productService.findProductInfoByProductId(productId)
-
-        then:
         productRepository.findProductInfoByProductId(productId) >> {
             def product = new ProductInfo()
             product.id = 1L
@@ -28,6 +24,12 @@ class ProductServiceTest extends Specification {
 
             return product
         }
+
+        when:
+        ProductInfo productInfo = productService.findProductInfoByProductId(productId)
+
+        then:
+        productInfo != null
     }
 
     def "공연 조회 실패, 존재하지 않는 productId"() {
@@ -37,7 +39,7 @@ class ProductServiceTest extends Specification {
         def productId = 2L
 
         when:
-        ProductInfo productInfo = productService.findProductInfoByProductId(productId)
+        productService.findProductInfoByProductId(productId)
 
         then:
         productRepository.findProductInfoByProductId(productId) >> null

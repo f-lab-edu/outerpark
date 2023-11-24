@@ -36,11 +36,13 @@ class AccountServiceTest extends Specification {
     }
 
     def "회원가입 실패, ID 중복"() {
+        given:
+        accountRepository.findByEmail(signUpRequest.email) >> new Account()
+
         when:
         accountService.signUp(signUpRequest)
 
         then:
-        accountRepository.findByEmail(signUpRequest.email) >> new Account()
         thrown(DuplicateEmailException.class)
     }
 
