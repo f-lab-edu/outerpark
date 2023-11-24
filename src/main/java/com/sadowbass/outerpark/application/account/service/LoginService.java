@@ -5,6 +5,7 @@ import com.sadowbass.outerpark.application.account.dto.LoginResult;
 import com.sadowbass.outerpark.application.account.exception.InvalidLoginInformationException;
 import com.sadowbass.outerpark.application.account.exception.NoSuchAccountDataException;
 import com.sadowbass.outerpark.application.account.repository.AccountRepository;
+import com.sadowbass.outerpark.infra.session.LoginManager;
 import com.sadowbass.outerpark.infra.utils.PasswordUtils;
 import com.sadowbass.outerpark.presentation.dto.account.LoginRequest;
 import lombok.RequiredArgsConstructor;
@@ -16,12 +17,14 @@ import org.springframework.transaction.annotation.Transactional;
 public class LoginService {
 
     private final AccountRepository accountRepository;
+    private final LoginManager loginManager;
 
     @Transactional(readOnly = true)
     public LoginResult login(LoginRequest loginRequest) {
         Account account = accountRepository.findByEmail(loginRequest.getEmail());
         valid(loginRequest, account);
-
+        loginManager.login(new LoginResult(account.getEmail()));
+        
         return new LoginResult(account.getEmail());
     }
 
