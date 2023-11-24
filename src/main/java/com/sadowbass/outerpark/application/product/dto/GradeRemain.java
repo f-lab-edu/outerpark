@@ -9,5 +9,5 @@ public class GradeRemain {
 
     private Long id;
     private String name;
-    private int remain;
+    private Integer remain;
 }
