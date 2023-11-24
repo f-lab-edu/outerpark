@@ -21,7 +21,7 @@ public class LoginController {
     private static final String SESSION_ID = "loginUser";
 
     @PostMapping("/login")
-    public BaseResponse login(@RequestBody LoginRequest loginRequest, HttpSession session) {
+    public BaseResponse<Void> login(@RequestBody LoginRequest loginRequest, HttpSession session) {
         if (session.getAttribute(SESSION_ID) != null) {
             throw new AlreadyLoggedInException();
         }
@@ -34,7 +34,7 @@ public class LoginController {
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(value = {AlreadyLoggedInException.class, NoSuchAccountDataException.class, InvalidLoginInformationException.class})
-    public BaseResponse handleAlreadyLoggedInException(RuntimeException exception) {
-        return new BaseResponse(400, exception.getMessage());
+    public BaseResponse<Void> handleAlreadyLoggedInException(RuntimeException exception) {
+        return new BaseResponse<>(HttpStatus.BAD_REQUEST.value(), exception.getMessage(), null);
     }
 }

@@ -10,5 +10,5 @@ public class Product extends BaseEntity {
     private Long hallId;
     private String name;
     private String describe;
-    private int runningTime;
+    private Integer runningTime;
 }

@@ -20,5 +20,5 @@ public class ProductInfo {
     private LocalDateTime lastDate;
     private String name;
     private String describe;
-    private int runningTime;
+    private Integer runningTime;
 }
