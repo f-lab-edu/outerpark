@@ -199,4 +199,6 @@ gradle-app.setting
 # Java heap dump
 *.hprof
 
+**/learningtest/
+.idea/
 # End of https://www.toptal.com/developers/gitignore/api/intellij+iml,intellij+all,java,gradle
