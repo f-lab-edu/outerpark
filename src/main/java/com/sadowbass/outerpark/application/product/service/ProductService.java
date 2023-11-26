@@ -5,13 +5,17 @@ import com.sadowbass.outerpark.application.product.dto.ProductInfo;
 import com.sadowbass.outerpark.application.product.dto.RoundInfo;
 import com.sadowbass.outerpark.application.product.exception.NoSuchProductException;
 import com.sadowbass.outerpark.application.product.repository.ProductRepository;
+import com.sadowbass.outerpark.infra.utils.validation.ValidationUtils;
+import com.sadowbass.outerpark.presentation.dto.product.ReservationRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class ProductService {
 
     private final ProductRepository productRepository;
@@ -31,5 +35,11 @@ public class ProductService {
 
     public List<AvailableSeat> findAvailableSeatsByRoundIdAndGradeId(Long roundId, Long gradeId) {
         return productRepository.findAvailableSeatByRoundIdAndGradeId(roundId, gradeId);
+    }
+
+    @Transactional
+    public void reservation(Long roundId, ReservationRequest reservationRequest) {
+        ValidationUtils.validate(reservationRequest);
+        
     }
 }
