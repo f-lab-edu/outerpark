@@ -23,9 +23,11 @@ public class LoginService {
     public LoginResult login(LoginRequest loginRequest) {
         Account account = accountRepository.findByEmail(loginRequest.getEmail());
         valid(loginRequest, account);
-        loginManager.login(new LoginResult(account.getEmail()));
+
+        LoginResult loginResult = new LoginResult(account.getEmail());
+        loginManager.login(loginResult);
         
-        return new LoginResult(account.getEmail());
+        return loginResult;
     }
 
     private void valid(LoginRequest loginRequest, Account account) {
