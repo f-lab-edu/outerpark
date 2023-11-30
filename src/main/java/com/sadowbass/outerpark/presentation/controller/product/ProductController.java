@@ -40,6 +40,7 @@ public class ProductController {
 
     @PostMapping("/{productId}/rounds/{roundId}")
     public BaseResponse reservation(@PathVariable Long roundId, @RequestBody ReservationRequest reservationRequest) {
+        productService.reservation(roundId, reservationRequest);
         return null;
     }
 

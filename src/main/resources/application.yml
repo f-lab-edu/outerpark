@@ -15,7 +15,7 @@ spring:
       on-profile: dev
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/outerpark
+    url: jdbc:mysql://localhost:3306/outerpark?allowMultiQueries=true
     username: root
     password:
   redis:

@@ -1,5 +1,6 @@
 package com.sadowbass.outerpark.application.product.repository;
 
+import com.sadowbass.outerpark.application.product.domain.RoundSeats;
 import com.sadowbass.outerpark.application.product.dto.AvailableSeat;
 import com.sadowbass.outerpark.application.product.dto.ProductInfo;
 import com.sadowbass.outerpark.application.product.dto.RoundInfo;
@@ -13,4 +14,8 @@ public interface ProductRepository {
     List<RoundInfo> findRoundInfosByProductId(Long productId);
 
     List<AvailableSeat> findAvailableSeatByRoundIdAndGradeId(Long roundId, Long gradeId);
+
+    List<RoundSeats> findEnabledRoundSeatsByRoundIdAndSeatIds(Long roundId, List<Long> seats);
+
+    int updateRoundSeats(List<RoundSeats> enableRoundSeats);
 }

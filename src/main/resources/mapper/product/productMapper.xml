@@ -46,6 +46,33 @@
                  JOIN SEATS s ON s.id = rs.seat_id
                  JOIN ROUNDS r ON r.id = rs.round_id AND r.id = #{roundId}
                  JOIN GRADES g ON g.id = rs.grade_id AND g.id = #{gradeId}
-        WHERE rs.status = 'enable';
+        WHERE rs.status = 'ENABLE';
     </select>
+
+    <select id="findEnabledRoundSeatsByRoundIdAndSeatIds" resultType="RoundSeats">
+        SELECT *
+        FROM ROUND_SEATS
+        WHERE round_id = #{roundId}
+        AND seat_id IN
+        <foreach collection="seats" item="seatId" separator="," open="(" close=")">
+            #{seatId}
+        </foreach>
+        AND status = 'enable'
+        FOR
+        UPDATE
+    </select>
+
+    <update id="updateRoundSeats">
+        <foreach collection="seats" item="seat" separator=";">
+            UPDATE ROUND_SEATS
+            SET
+            member_id = #{seat.memberId},
+            status = #{seat.status},
+            expire = #{seat.expire},
+            modified_by = #{seat.modifiedBy},
+            modified_date = #{seat.modifiedDate}
+            WHERE id = #{seat.id}
+        </foreach>
+
+    </update>
 </mapper>
