@@ -21,7 +21,7 @@ public abstract class ValidationUtils {
     }
 
     private ValidationUtils() {
-        
+
     }
 
     public static void validate(Object obj) {

@@ -7,9 +7,9 @@ import java.time.LocalDateTime;
 @Getter
 public class BaseEntity {
 
-    private LocalDateTime createdDate;
+    private final LocalDateTime createdDate;
     private Long createdBy;
-    private LocalDateTime modifiedDate;
+    private final LocalDateTime modifiedDate;
     private Long modifiedBy;
 
     public BaseEntity() {
