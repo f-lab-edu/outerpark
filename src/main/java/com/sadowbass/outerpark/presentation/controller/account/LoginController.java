@@ -1,6 +1,5 @@
 package com.sadowbass.outerpark.presentation.controller.account;
 
-import com.sadowbass.outerpark.application.account.dto.LoginResult;
 import com.sadowbass.outerpark.application.account.exception.AlreadyLoggedInException;
 import com.sadowbass.outerpark.application.account.exception.InvalidLoginInformationException;
 import com.sadowbass.outerpark.application.account.exception.NoSuchAccountDataException;
@@ -11,24 +10,16 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
-
 @RestController
 @RequiredArgsConstructor
 public class LoginController {
 
     private final LoginService loginService;
-    private static final String SESSION_ID = "loginUser";
 
     @PostMapping("/login")
-    public BaseResponse<Void> login(@RequestBody LoginRequest loginRequest, HttpSession session) {
-        if (session.getAttribute(SESSION_ID) != null) {
-            throw new AlreadyLoggedInException();
-        }
 
-        LoginResult loginResult = loginService.login(loginRequest);
-        session.setAttribute(SESSION_ID, loginResult);
-
+    public BaseResponse<Void> login(@RequestBody LoginRequest loginRequest) {
+        loginService.login(loginRequest);
         return BaseResponse.ok();
     }
 

@@ -2,8 +2,10 @@ package com.sadowbass.outerpark.application.account.dto;
 
 import lombok.Getter;
 
+import java.io.Serializable;
+
 @Getter
-public class LoginResult {
+public class LoginResult implements Serializable {
 
     private final String email;
 
