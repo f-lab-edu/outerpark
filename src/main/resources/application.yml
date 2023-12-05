@@ -13,3 +13,19 @@ spring:
     url: jdbc:mysql://localhost:3306/outerpark
     username: root
     password:
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    password:
+  session:
+    store-type: redis
+    redis:
+      namespace: outerpark:session
+
+server:
+  servlet:
+    session:
+      cookie:
+        path: /
+        name: OUTERPARK-SESSION-ID
+      timeout: 60m

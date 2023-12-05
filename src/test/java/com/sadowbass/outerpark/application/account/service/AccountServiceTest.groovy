@@ -1,5 +1,6 @@
-package com.sadowbass.outerpark.application.account
+package com.sadowbass.outerpark.application.account.service
 
+import com.sadowbass.outerpark.application.account.Account
 import com.sadowbass.outerpark.application.account.exception.DuplicateEmailException
 import com.sadowbass.outerpark.application.account.repository.AccountRepository
 import com.sadowbass.outerpark.application.account.service.AccountService
@@ -50,7 +51,7 @@ class AccountServiceTest extends Specification {
         wrongRequest.email = "wrong2email.com"
 
         when:
-        accountService.signUp(wrongRequest);
+        accountService.signUp(wrongRequest)
 
         then:
         thrown(ValidationException.class)

@@ -7,9 +7,9 @@ import javax.validation.ConstraintViolation;
 @Getter
 public class ViolationResult {
 
-    private String property;
-    private String message;
-    private Object invalidValue;
+    private final String property;
+    private final String message;
+    private final Object invalidValue;
 
     public ViolationResult(ConstraintViolation<Object> constraintViolation) {
         this.property = constraintViolation.getPropertyPath().toString();
