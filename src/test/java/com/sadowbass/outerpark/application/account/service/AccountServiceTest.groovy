@@ -1,9 +1,8 @@
 package com.sadowbass.outerpark.application.account.service
 
-import com.sadowbass.outerpark.application.account.Account
+import com.sadowbass.outerpark.application.account.domain.Account
 import com.sadowbass.outerpark.application.account.exception.DuplicateEmailException
 import com.sadowbass.outerpark.application.account.repository.AccountRepository
-import com.sadowbass.outerpark.application.account.service.AccountService
 import com.sadowbass.outerpark.infra.utils.validation.exception.ValidationException
 import com.sadowbass.outerpark.presentation.dto.account.SignUpRequest
 import spock.lang.Shared
@@ -37,11 +36,13 @@ class AccountServiceTest extends Specification {
     }
 
     def "회원가입 실패, ID 중복"() {
+        given:
+        accountRepository.findByEmail(signUpRequest.email) >> new Account()
+
         when:
         accountService.signUp(signUpRequest)
 
         then:
-        accountRepository.findByEmail(signUpRequest.email) >> new Account()
         thrown(DuplicateEmailException.class)
     }
 

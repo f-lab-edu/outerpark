@@ -1,7 +1,7 @@
 package com.sadowbass.outerpark.application.account.service
 
 
-import com.sadowbass.outerpark.application.account.Account
+import com.sadowbass.outerpark.application.account.domain.Account
 import com.sadowbass.outerpark.application.account.exception.InvalidLoginInformationException
 import com.sadowbass.outerpark.application.account.exception.NoSuchAccountDataException
 import com.sadowbass.outerpark.application.account.repository.AccountRepository
@@ -44,11 +44,13 @@ class LoginServiceTest extends Specification {
     }
 
     def "로그인 실패. Email 없음"() {
+        given:
+        accountRepository.findByEmail(loginRequest.email) >> null
+
         when:
         loginService.login(loginRequest)
 
         then:
-        accountRepository.findByEmail(loginRequest.email) >> null
         thrown(NoSuchAccountDataException.class)
     }
 
@@ -58,11 +60,12 @@ class LoginServiceTest extends Specification {
         testAccount.email = loginRequest.email
         testAccount.password = "wrong password"
 
+        accountRepository.findByEmail(loginRequest.email) >> testAccount
+
         when:
         loginService.login(loginRequest)
 
         then:
-        accountRepository.findByEmail(loginRequest.email) >> testAccount
         thrown(InvalidLoginInformationException.class)
     }
 }

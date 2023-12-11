@@ -1,9 +1,7 @@
 package com.sadowbass.outerpark.application.account.repository;
 
-import com.sadowbass.outerpark.application.account.Account;
-import org.springframework.stereotype.Repository;
+import com.sadowbass.outerpark.application.account.domain.Account;
 
-@Repository
 public interface AccountRepository {
 
     Account findByEmail(String email);

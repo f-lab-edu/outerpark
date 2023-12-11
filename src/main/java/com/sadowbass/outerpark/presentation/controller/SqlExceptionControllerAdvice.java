@@ -15,7 +15,7 @@ public class SqlExceptionControllerAdvice {
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
-    public BaseResponse handleSQLIntegrityConstraintViolationException(SQLIntegrityConstraintViolationException exception) {
-        return new BaseResponse(HttpStatus.BAD_REQUEST.value(), UNIQUE_VIOLATION_MESSAGE);
+    public BaseResponse<Void> handleSQLIntegrityConstraintViolationException() {
+        return new BaseResponse<>(HttpStatus.BAD_REQUEST.value(), UNIQUE_VIOLATION_MESSAGE, null);
     }
 }

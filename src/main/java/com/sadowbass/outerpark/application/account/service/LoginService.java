@@ -1,6 +1,6 @@
 package com.sadowbass.outerpark.application.account.service;
 
-import com.sadowbass.outerpark.application.account.Account;
+import com.sadowbass.outerpark.application.account.domain.Account;
 import com.sadowbass.outerpark.application.account.dto.LoginResult;
 import com.sadowbass.outerpark.application.account.exception.InvalidLoginInformationException;
 import com.sadowbass.outerpark.application.account.exception.NoSuchAccountDataException;

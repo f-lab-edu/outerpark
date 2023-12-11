@@ -9,7 +9,7 @@ public class BaseEntity {
 
     private final LocalDateTime createdDate;
     private Long createdBy;
-    private final LocalDateTime modifiedDate;
+    private LocalDateTime modifiedDate;
     private Long modifiedBy;
 
     public BaseEntity() {
@@ -22,5 +22,10 @@ public class BaseEntity {
     public void addCreator(Long createdBy) {
         this.createdBy = createdBy;
         this.modifiedBy = createdBy;
+    }
+
+    public void modify(Long modifiedBy) {
+        this.modifiedBy = modifiedBy;
+        this.modifiedDate = LocalDateTime.now();
     }
 }
