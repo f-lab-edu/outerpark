@@ -12,11 +12,30 @@ import java.util.List;
 public interface ProductRepositoryMapper extends ProductRepository {
 
     @Override
-    List<AvailableSeat> findAvailableSeatByRoundIdAndGradeId(@Param("roundId") Long roundId, @Param("gradeId") Long gradeId);
+    List<AvailableSeat> findAvailableSeatByRoundIdAndGradeId(
+            @Param("roundId") Long roundId,
+            @Param("gradeId") Long gradeId
+    );
 
     @Override
-    List<RoundSeats> findEnabledRoundSeatsByRoundIdAndSeatIds(@Param("roundId") Long roundId, @Param("seats") List<Long> seats);
+    List<RoundSeats> findEnabledRoundSeatsByRoundIdAndSeatIds(
+            @Param("roundId") Long roundId,
+            @Param("seats") List<Long> seats
+    );
 
     @Override
-    int updateRoundSeats(@Param("seats") List<RoundSeats> enableRoundSeats);
+    int pendingRoundSeats(@Param("seats") List<RoundSeats> enableRoundSeats);
+
+    @Override
+    List<RoundSeats> findPendingRoundSeats(
+            @Param("memberId") Long memberId,
+            @Param("roundId") Long roundId,
+            @Param("pendingId") String pendingId
+    );
+
+    @Override
+    int reserveRoundSeats(@Param("seats") List<Long> seats, @Param("memberId") Long memberId);
+
+    @Override
+    int createTickets(@Param("seats") List<Long> seats, @Param("memberId") Long memberId, @Param("roundId") Long roundId);
 }

@@ -59,10 +59,10 @@
         </foreach>
         AND status = 'enable'
         FOR
-        UPDATE
+        UPDATE NOWAIT
     </select>
 
-    <update id="updateRoundSeats">
+    <update id="pendingRoundSeats">
         <foreach collection="seats" item="seat" separator=";">
             UPDATE ROUND_SEATS
             SET
@@ -70,9 +70,68 @@
             status = #{seat.status},
             expire = #{seat.expire},
             modified_by = #{seat.modifiedBy},
-            modified_date = #{seat.modifiedDate}
+            modified_date = #{seat.modifiedDate},
+            pending_id = #{seat.pendingId}
             WHERE id = #{seat.id}
         </foreach>
-
     </update>
+
+    <select id="findPendingRoundSeats" resultType="RoundSeats">
+        SELECT *
+        FROM ROUND_SEATS
+        WHERE member_id = #{memberId}
+          AND round_id = #{roundId}
+          AND pending_id = #{pendingId}
+    </select>
+
+    <update id="reserveRoundSeats">
+        UPDATE ROUND_SEATS
+        SET status = 'RESERVED',
+        modified_date = now(),
+        modified_by = #{memberId}
+        WHERE id IN
+        <foreach collection="seats" item="seatId" separator="," open="(" close=")">
+            #{seatId}
+        </foreach>
+    </update>
+
+    <insert id="createTickets">
+        INSERT INTO TICKETS(
+        member_id,
+        round_seat_id,
+        product_name,
+        hall_name,
+        round_date_time,
+        seat_name,
+        grade_name,
+        price,
+        created_date,
+        created_by,
+        modified_date,
+        modified_by
+        )
+        SELECT #{memberId} AS member_id,
+        rs.id AS round_seat_id,
+        p.name AS product_name,
+        h.name AS hall_name,
+        r.date_time AS round_date_time,
+        s.name AS seat_name,
+        g.name AS grade_name,
+        g.price AS price,
+        NOW() AS created_date,
+        #{memberId} AS created_by,
+        NOW() AS modified_date,
+        NULL AS modified_by
+        FROM ROUND_SEATS rs
+        JOIN GRADES g ON g.id = rs.grade_id
+        JOIN ROUNDS r ON r.id = rs.round_id
+        JOIN SEATS s ON s.id = rs.seat_id
+        JOIN PRODUCTS p ON p.id = r.product_id
+        JOIN HALL h ON h.id = p.hall_id
+        WHERE rs.id IN
+        <foreach collection="seats" item="seatId" separator="," open="(" close=")">
+            #{seatId}
+        </foreach>
+        AND r.id = #{roundId}
+    </insert>
 </mapper>

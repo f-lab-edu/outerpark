@@ -1,5 +1,5 @@
 package com.sadowbass.outerpark.application.product.domain;
 
-public enum Status {
+public enum ReservationStatus {
     ENABLE, PENDING, RESERVED
 }

@@ -13,13 +13,15 @@ public class RoundSeats extends BaseEntity {
     private Long gradeId;
     private Long roundId;
     private Long seatId;
-    private Status status;
+    private String pendingId;
+    private ReservationStatus status;
     private LocalDateTime expire;
 
-    public void makeReservation(Long memberId) {
+    public void makeReservation(Long memberId, String pendingId) {
         this.memberId = memberId;
-        this.status = Status.PENDING;
+        this.status = ReservationStatus.PENDING;
         this.expire = LocalDateTime.now().plusMinutes(5);
+        this.pendingId = pendingId;
 
         modify(memberId);
     }

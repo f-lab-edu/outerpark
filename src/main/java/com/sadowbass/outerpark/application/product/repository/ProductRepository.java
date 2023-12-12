@@ -17,5 +17,11 @@ public interface ProductRepository {
 
     List<RoundSeats> findEnabledRoundSeatsByRoundIdAndSeatIds(Long roundId, List<Long> seats);
 
-    int updateRoundSeats(List<RoundSeats> enableRoundSeats);
+    int pendingRoundSeats(List<RoundSeats> enableRoundSeats);
+
+    List<RoundSeats> findPendingRoundSeats(Long memberId, Long roundId, String pendingId);
+
+    int reserveRoundSeats(List<Long> seats, Long id);
+
+    int createTickets(List<Long> seats, Long memberId, Long roundId);
 }
