@@ -23,6 +23,16 @@ public class LoginManager {
         httpSession.setAttribute(SESSION_ID, loginResult);
     }
 
+    public LoginResult getUser() {
+        LoginResult loginResult = (LoginResult) currentSession.get().getAttribute(SESSION_ID);
+        if (loginResult == null) {
+            //TODO create custom exception
+            throw new RuntimeException("로그인이 필요합니다.");
+        }
+
+        return loginResult;
+    }
+
     public void setSession(HttpSession session) {
         this.currentSession.set(session);
     }

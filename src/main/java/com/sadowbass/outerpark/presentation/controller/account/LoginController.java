@@ -17,7 +17,6 @@ public class LoginController {
     private final LoginService loginService;
 
     @PostMapping("/login")
-
     public BaseResponse<Void> login(@RequestBody LoginRequest loginRequest) {
         loginService.login(loginRequest);
         return BaseResponse.ok();

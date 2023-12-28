@@ -24,9 +24,9 @@ public class LoginService {
         Account account = accountRepository.findByEmail(loginRequest.getEmail());
         valid(loginRequest, account);
 
-        LoginResult loginResult = new LoginResult(account.getEmail());
+        LoginResult loginResult = new LoginResult(account.getId(), account.getEmail());
         loginManager.login(loginResult);
-        
+
         return loginResult;
     }
 
