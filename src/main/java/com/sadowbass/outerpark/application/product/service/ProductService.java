@@ -52,7 +52,7 @@ public class ProductService {
         List<RoundSeats> enableRoundSeats = productRepository.findEnabledRoundSeatsByRoundIdAndSeatIds(roundId, seats);
         canPending(seats, enableRoundSeats);
 
-        LoginResult user = loginManager.getUser();
+        LoginResult user = loginManager.getMember();
         String pendingId = UUID.randomUUID().toString();
         enableRoundSeats.forEach(roundSeats -> roundSeats.makeReservation(user.getId(), pendingId));
 
@@ -69,7 +69,7 @@ public class ProductService {
 
     @Transactional
     public void reservation(Long roundId, String pendingId) {
-        LoginResult user = loginManager.getUser();
+        LoginResult user = loginManager.getMember();
         List<RoundSeats> roundSeats = productRepository.findPendingRoundSeats(user.getId(), roundId, pendingId);
 
         List<Long> seats = roundSeats.stream().map(RoundSeats::getId).collect(Collectors.toList());

@@ -1,8 +1,11 @@
 package com.sadowbass.outerpark.application.account.service;
 
 import com.sadowbass.outerpark.application.account.domain.Account;
+import com.sadowbass.outerpark.application.account.dto.AccountInfo;
+import com.sadowbass.outerpark.application.account.dto.LoginResult;
 import com.sadowbass.outerpark.application.account.exception.DuplicateEmailException;
 import com.sadowbass.outerpark.application.account.repository.AccountRepository;
+import com.sadowbass.outerpark.infra.session.LoginManager;
 import com.sadowbass.outerpark.infra.utils.PasswordUtils;
 import com.sadowbass.outerpark.infra.utils.validation.ValidationUtils;
 import com.sadowbass.outerpark.presentation.dto.account.SignUpRequest;
@@ -15,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class AccountService {
 
     private final AccountRepository accountRepository;
+    private final LoginManager loginManager;
 
     @Transactional
     public void signUp(SignUpRequest signUpRequest) {
@@ -25,10 +29,10 @@ public class AccountService {
             throw new DuplicateEmailException(signUpRequest.getEmail());
         }
 
-        String encode = PasswordUtils.encode(signUpRequest.getPassword());
+        String encodedPassword = PasswordUtils.encode(signUpRequest.getPassword());
         Account account = Account.create(
                 signUpRequest.getEmail(),
-                encode,
+                encodedPassword,
                 signUpRequest.getName(),
                 signUpRequest.getNickname(),
                 signUpRequest.getPhone()
@@ -38,5 +42,10 @@ public class AccountService {
 
         account.addCreator(account.getId());
         accountRepository.updateCreateData(account);
+    }
+
+    public AccountInfo retrieveMyInfo() {
+        LoginResult member = loginManager.getMember();
+        return accountRepository.findAccountInfoById(member.getId());
     }
 }

@@ -3,7 +3,7 @@
 
 <mapper namespace="com.sadowbass.outerpark.infra.mapper.AccountRepositoryMapper">
     <select id="findByEmail" parameterType="string"
-            resultType="com.sadowbass.outerpark.application.account.domain.Account">
+            resultType="Account">
         SELECT *
         FROM MEMBERS
         WHERE email = #{email}
@@ -22,4 +22,10 @@
             modified_by = #{modifiedBy}
         WHERE id = #{id}
     </update>
+
+    <select id="findAccountInfoById" parameterType="long" resultType="AccountInfo">
+        SELECT email, name, nickname, phone
+        FROM MEMBERS
+        WHERE id = #{id}
+    </select>
 </mapper>

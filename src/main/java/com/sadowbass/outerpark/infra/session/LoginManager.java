@@ -2,6 +2,7 @@ package com.sadowbass.outerpark.infra.session;
 
 import com.sadowbass.outerpark.application.account.dto.LoginResult;
 import com.sadowbass.outerpark.application.account.exception.AlreadyLoggedInException;
+import com.sadowbass.outerpark.infra.session.exception.LoginRequiredException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -23,11 +24,10 @@ public class LoginManager {
         httpSession.setAttribute(SESSION_ID, loginResult);
     }
 
-    public LoginResult getUser() {
+    public LoginResult getMember() {
         LoginResult loginResult = (LoginResult) currentSession.get().getAttribute(SESSION_ID);
         if (loginResult == null) {
-            //TODO create custom exception
-            throw new RuntimeException("로그인이 필요합니다.");
+            throw new LoginRequiredException();
         }
 
         return loginResult;

@@ -1,5 +1,6 @@
 package com.sadowbass.outerpark.presentation.controller.account;
 
+import com.sadowbass.outerpark.application.account.dto.AccountInfo;
 import com.sadowbass.outerpark.application.account.exception.DuplicateEmailException;
 import com.sadowbass.outerpark.application.account.service.AccountService;
 import com.sadowbass.outerpark.presentation.dto.BaseResponse;
@@ -9,16 +10,21 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/accounts")
 @RequiredArgsConstructor
 public class AccountController {
 
     private final AccountService accountService;
 
-    @PostMapping
+    @PostMapping("/accounts")
     public BaseResponse<Void> signUp(@RequestBody SignUpRequest signUpRequest) {
         accountService.signUp(signUpRequest);
         return BaseResponse.ok();
+    }
+
+    @GetMapping("/me")
+    public BaseResponse<AccountInfo> myInfo() {
+        AccountInfo accountInfo = accountService.retrieveMyInfo();
+        return BaseResponse.okWithResult(accountInfo);
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
