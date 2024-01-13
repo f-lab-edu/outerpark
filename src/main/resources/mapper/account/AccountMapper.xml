@@ -28,4 +28,35 @@
         FROM MEMBERS
         WHERE id = #{id}
     </select>
+
+    <select id="findMyReservationsCount">
+        SELECT COUNT(*)
+        FROM TICKETS
+        <where>
+            AND member_id = #{memberId}
+            <if test="startDate != null">
+                AND created_date >= #{startDate}
+            </if>
+        </where>
+    </select>
+
+    <select id="findMyReservations" resultType="MyTicket">
+        SELECT id as id,
+        product_name as productName,
+        hall_name as hallName,
+        round_date_time as roundDateTime,
+        seat_name as seatName,
+        grade_name as gradeName,
+        price as price,
+        created_date as reservationDate
+        FROM TICKETS
+        <where>
+            AND member_id = #{memberId}
+            <if test="startDate != null">
+                AND created_date >= #{startDate}
+            </if>
+        </where>
+        ORDER BY created_date DESC
+        LIMIT #{page.limit} OFFSET #{page.offset}
+    </select>
 </mapper>

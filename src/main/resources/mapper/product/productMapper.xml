@@ -40,7 +40,7 @@
     </select>
 
     <select id="findAvailableSeatByRoundIdAndGradeId" resultType="AvailableSeat">
-        SELECT g.id,
+        SELECT rs.id,
                s.name AS seat_name
         FROM ROUND_SEATS rs
                  JOIN SEATS s ON s.id = rs.seat_id
