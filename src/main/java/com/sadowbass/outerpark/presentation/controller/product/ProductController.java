@@ -3,19 +3,16 @@ package com.sadowbass.outerpark.presentation.controller.product;
 import com.sadowbass.outerpark.application.product.dto.AvailableSeat;
 import com.sadowbass.outerpark.application.product.dto.ProductInfo;
 import com.sadowbass.outerpark.application.product.dto.RoundInfo;
-import com.sadowbass.outerpark.application.product.exception.AlreadyPendingException;
 import com.sadowbass.outerpark.application.product.exception.NoSuchProductException;
 import com.sadowbass.outerpark.application.product.service.ProductService;
+import com.sadowbass.outerpark.application.reservation.exception.AlreadyPendingException;
 import com.sadowbass.outerpark.presentation.dto.BaseResponse;
-import com.sadowbass.outerpark.presentation.dto.product.ReservationRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.CannotAcquireLockException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/products")
@@ -40,20 +37,6 @@ public class ProductController {
     public BaseResponse<List<AvailableSeat>> getAvailableSeats(@PathVariable Long roundId, @RequestParam("gradeId") Long gradeId) {
         List<AvailableSeat> availableSeats = productService.findAvailableSeatsByRoundIdAndGradeId(roundId, gradeId);
         return BaseResponse.okWithResult(availableSeats);
-    }
-
-    @PostMapping("/{productId}/rounds/{roundId}")
-    public BaseResponse<Map<String, String>> pending(@PathVariable Long roundId, @RequestBody ReservationRequest reservationRequest) {
-        String pendingId = productService.pending(roundId, reservationRequest);
-        Map<String, String> result = new HashMap<>();
-        result.put("pendingId", pendingId);
-        return BaseResponse.okWithResult(result);
-    }
-
-    @PostMapping("/{productId}/rounds/{roundId}/pendings/{pendingId}")
-    public BaseResponse<Void> reservation(@PathVariable Long roundId, @PathVariable String pendingId) {
-        productService.reservation(roundId, pendingId);
-        return BaseResponse.ok();
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)

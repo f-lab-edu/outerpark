@@ -1,4 +1,4 @@
-package com.sadowbass.outerpark.application.account.dto;
+package com.sadowbass.outerpark.application.myinfo.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -5,6 +5,7 @@ import com.sadowbass.outerpark.application.account.domain.Account
 import com.sadowbass.outerpark.application.account.exception.InvalidLoginInformationException
 import com.sadowbass.outerpark.application.account.exception.NoSuchAccountDataException
 import com.sadowbass.outerpark.application.account.repository.AccountRepository
+import com.sadowbass.outerpark.infra.session.LoginManager
 import com.sadowbass.outerpark.infra.utils.PasswordUtils
 import com.sadowbass.outerpark.presentation.dto.account.LoginRequest
 import spock.lang.Shared
@@ -14,6 +15,7 @@ class LoginServiceTest extends Specification {
 
     AccountRepository accountRepository
     LoginService loginService
+    LoginManager loginManager
 
     @Shared
     LoginRequest loginRequest
@@ -26,7 +28,8 @@ class LoginServiceTest extends Specification {
 
     def setup() {
         accountRepository = Mock(AccountRepository.class)
-        loginService = new LoginService(accountRepository)
+        loginManager = Mock(LoginManager.class)
+        loginService = new LoginService(accountRepository, loginManager)
     }
 
     def "로그인 성공"() {
