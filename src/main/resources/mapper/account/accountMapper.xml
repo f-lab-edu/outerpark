@@ -23,7 +23,7 @@
         WHERE id = #{id}
     </update>
 
-    <select id="findAccountInfoById" parameterType="long" resultType="AccountInfo">
+    <select id="findMyInfoById" parameterType="long" resultType="MyInfo">
         SELECT email, name, nickname, phone
         FROM MEMBERS
         WHERE id = #{id}

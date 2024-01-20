@@ -59,7 +59,7 @@ public class AccountService {
 
     public MyInfo retrieveMyInfo() {
         LoginResult member = loginManager.getMember();
-        return accountRepository.findAccountInfoById(member.getId());
+        return accountRepository.findMyInfoById(member.getId());
     }
 
     public PageResult<MyTicket> retrieveMyReservations(LocalDate startDate, Pagination pagination) {

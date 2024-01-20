@@ -13,7 +13,7 @@ public interface AccountRepository {
 
     Account findByEmail(String email);
 
-    MyInfo findAccountInfoById(Long id);
+    MyInfo findMyInfoById(Long id);
 
     Long save(Account account);
 

@@ -81,25 +81,25 @@ class AccountServiceTest extends Specification {
         def loginResult = new LoginResult(1L, "test@gmail.com")
         loginManager.getMember() >> loginResult
 
-        def accountInfo = new MyInfo("test@gmail.com", "유승철", "감자", "01047497649")
-        accountRepository.findAccountInfoById(loginResult.id) >> accountInfo
+        def myInfo = new MyInfo("test@gmail.com", "유승철", "감자", "01047497649")
+        accountRepository.findMyInfoById(loginResult.id) >> myInfo
 
         when:
-        def myInfo = accountService.retrieveMyInfo()
+        def result = accountService.retrieveMyInfo()
 
         then:
-        myInfo.email == accountInfo.email
-        myInfo.name == accountInfo.name
-        myInfo.nickname == accountInfo.nickname
-        myInfo.phone == accountInfo.phone
+        result.email == myInfo.email
+        result.name == myInfo.name
+        result.nickname == myInfo.nickname
+        result.phone == myInfo.phone
     }
 
     def "내 정보 조회 실패, 로그인이 되어 있지 않음"() {
         given:
         loginManager.getMember() >> { throw new LoginRequiredException() }
 
-        def accountInfo = new MyInfo("test@gmail.com", "유승철", "감자", "01047497649")
-        accountRepository.findAccountInfoById(1L) >> accountInfo
+        def myInfo = new MyInfo("test@gmail.com", "유승철", "감자", "01047497649")
+        accountRepository.findMyInfoById(1L) >> myInfo
 
         when:
         accountService.retrieveMyInfo()
@@ -196,6 +196,6 @@ class AccountServiceTest extends Specification {
         def failedTickets = exception.failedTickets
 
         failedTickets.size() == 2
-        
+
     }
 }
