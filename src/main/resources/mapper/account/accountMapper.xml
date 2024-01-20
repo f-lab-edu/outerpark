@@ -48,7 +48,8 @@
         seat_name as seatName,
         grade_name as gradeName,
         price as price,
-        created_date as reservationDate
+        created_date as reservationDate,
+        status as ticketStatus
         FROM TICKETS
         <where>
             AND member_id = #{memberId}
@@ -59,4 +60,25 @@
         ORDER BY created_date DESC
         LIMIT #{page.limit} OFFSET #{page.offset}
     </select>
+
+    <select id="findAllTicketsByMemberIdAndTicketIds" resultType="Ticket">
+        SELECT *
+        FROM TICKETS
+        WHERE member_id = #{memberId}
+        AND id IN
+        <foreach collection="ticketIds" item="ticketId" separator="," open="(" close=")">
+            #{ticketId}
+        </foreach>
+    </select>
+
+    <update id="cancelTickets">
+        UPDATE TICKETS
+        SET STATUS='CANCELED',
+        modified_date = NOW(),
+        modified_by = #{modifiedBy}
+        WHERE id IN
+        <foreach collection="ticketIds" item="ticketId" separator="," open="(" close=")">
+            #{ticketId}
+        </foreach>
+    </update>
 </mapper>

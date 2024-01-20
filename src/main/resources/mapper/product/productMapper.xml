@@ -108,7 +108,8 @@
         created_date,
         created_by,
         modified_date,
-        modified_by
+        modified_by,
+        status
         )
         SELECT #{memberId} AS member_id,
         rs.id AS round_seat_id,
@@ -121,7 +122,8 @@
         NOW() AS created_date,
         #{memberId} AS created_by,
         NOW() AS modified_date,
-        NULL AS modified_by
+        NULL AS modified_by,
+        'RESERVED'
         FROM ROUND_SEATS rs
         JOIN GRADES g ON g.id = rs.grade_id
         JOIN ROUNDS r ON r.id = rs.round_id
@@ -134,4 +136,18 @@
         </foreach>
         AND r.id = #{roundId}
     </insert>
+
+    <update id="returnRoundSeatsToEnable">
+        UPDATE ROUND_SEATS
+        SET status='ENABLE',
+        member_id = NULL,
+        expire = NULL,
+        modified_date = NOW(),
+        modified_by = #{modifiedBy},
+        pending_id = NULL
+        WHERE id IN
+        <foreach collection="roundSeatIds" item="roundSeatId" separator="," open="(" close=")">
+            #{roundSeatId}
+        </foreach>
+    </update>
 </mapper>

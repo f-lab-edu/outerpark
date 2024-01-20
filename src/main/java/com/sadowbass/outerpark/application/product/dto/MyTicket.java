@@ -1,6 +1,7 @@
 package com.sadowbass.outerpark.application.product.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.sadowbass.outerpark.application.product.domain.TicketStatus;
 import lombok.Getter;
 
 import java.math.BigDecimal;
@@ -21,4 +22,5 @@ public class MyTicket {
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime reservationDate;
+    private TicketStatus ticketStatus;
 }

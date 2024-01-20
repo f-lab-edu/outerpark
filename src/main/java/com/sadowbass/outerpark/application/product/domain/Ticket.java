@@ -21,4 +21,9 @@ public class Ticket extends BaseEntity {
     private String seatName;
     private String gradeName;
     private BigDecimal price;
+    private TicketStatus status;
+
+    public boolean canCancel() {
+        return this.status == TicketStatus.RESERVED;
+    }
 }
