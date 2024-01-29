@@ -24,4 +24,6 @@ public interface ProductRepository {
     int reserveRoundSeats(List<Long> seats, Long id);
 
     int createTickets(List<Long> seats, Long memberId, Long roundId);
+
+    int returnRoundSeatsToEnable(List<Long> roundSeatIds, Long modifiedBy);
 }
