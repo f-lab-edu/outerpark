@@ -34,8 +34,21 @@ public interface ProductRepositoryMapper extends ProductRepository {
     );
 
     @Override
-    int reserveRoundSeats(@Param("seats") List<Long> seats, @Param("memberId") Long memberId);
+    int reserveRoundSeats(
+            @Param("seats") List<Long> seats,
+            @Param("memberId") Long memberId
+    );
 
     @Override
-    int createTickets(@Param("seats") List<Long> seats, @Param("memberId") Long memberId, @Param("roundId") Long roundId);
+    int createTickets(
+            @Param("seats") List<Long> seats,
+            @Param("memberId") Long memberId,
+            @Param("roundId") Long roundId
+    );
+
+    @Override
+    int returnRoundSeatsToEnable(
+            @Param("roundSeatIds") List<Long> roundSeatIds,
+            @Param("modifiedBy") Long modifiedBy
+    );
 }

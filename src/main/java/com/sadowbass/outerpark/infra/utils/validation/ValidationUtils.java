@@ -1,6 +1,8 @@
 package com.sadowbass.outerpark.infra.utils.validation;
 
 import com.sadowbass.outerpark.infra.utils.validation.exception.ValidationException;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
@@ -10,6 +12,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public abstract class ValidationUtils {
 
     private static final Validator VALIDATOR;
@@ -18,10 +21,6 @@ public abstract class ValidationUtils {
         try (ValidatorFactory factory = Validation.buildDefaultValidatorFactory()) {
             VALIDATOR = factory.getValidator();
         }
-    }
-
-    private ValidationUtils() {
-
     }
 
     public static void validate(Object obj) {
