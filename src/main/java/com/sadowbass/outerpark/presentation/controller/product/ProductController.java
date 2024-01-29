@@ -13,7 +13,9 @@ import org.springframework.dao.CannotAcquireLockException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/products")
@@ -41,9 +43,11 @@ public class ProductController {
     }
 
     @PostMapping("/{productId}/rounds/{roundId}")
-    public BaseResponse<String> pending(@PathVariable Long roundId, @RequestBody ReservationRequest reservationRequest) {
+    public BaseResponse<Map<String, String>> pending(@PathVariable Long roundId, @RequestBody ReservationRequest reservationRequest) {
         String pendingId = productService.pending(roundId, reservationRequest);
-        return BaseResponse.okWithResult(pendingId);
+        Map<String, String> result = new HashMap<>();
+        result.put("pendingId", pendingId);
+        return BaseResponse.okWithResult(result);
     }
 
     @PostMapping("/{productId}/rounds/{roundId}/pendings/{pendingId}")

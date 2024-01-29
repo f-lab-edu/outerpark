@@ -79,7 +79,7 @@ class ProductServiceTest extends Specification {
 
             return result
         }
-        loginManager.getUser() >> loginResult
+        loginManager.getMember() >> loginResult
 
         when:
         def pendingId = productService.pending(1, request)
