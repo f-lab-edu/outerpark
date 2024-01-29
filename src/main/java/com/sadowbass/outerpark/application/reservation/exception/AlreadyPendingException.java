@@ -1,4 +1,4 @@
-package com.sadowbass.outerpark.application.product.exception;
+package com.sadowbass.outerpark.application.reservation.exception;
 
 public class AlreadyPendingException extends RuntimeException {
 

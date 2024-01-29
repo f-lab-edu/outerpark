@@ -1,8 +1,8 @@
 package com.sadowbass.outerpark.infra.mapper;
 
 import com.sadowbass.outerpark.application.account.repository.AccountRepository;
+import com.sadowbass.outerpark.application.myinfo.dto.MyTicket;
 import com.sadowbass.outerpark.application.product.domain.Ticket;
-import com.sadowbass.outerpark.application.product.dto.MyTicket;
 import com.sadowbass.outerpark.infra.utils.Pagination;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;

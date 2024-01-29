@@ -1,4 +1,4 @@
-package com.sadowbass.outerpark.presentation.dto.product;
+package com.sadowbass.outerpark.presentation.dto.reservation;
 
 import lombok.Getter;
 import lombok.Setter;

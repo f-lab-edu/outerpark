@@ -1,9 +1,9 @@
 package com.sadowbass.outerpark.application.account.repository;
 
 import com.sadowbass.outerpark.application.account.domain.Account;
-import com.sadowbass.outerpark.application.account.dto.MyInfo;
+import com.sadowbass.outerpark.application.myinfo.dto.MyInfo;
+import com.sadowbass.outerpark.application.myinfo.dto.MyTicket;
 import com.sadowbass.outerpark.application.product.domain.Ticket;
-import com.sadowbass.outerpark.application.product.dto.MyTicket;
 import com.sadowbass.outerpark.infra.utils.Pagination;
 
 import java.time.LocalDate;

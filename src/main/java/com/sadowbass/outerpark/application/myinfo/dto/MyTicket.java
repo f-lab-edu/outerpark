@@ -1,4 +1,4 @@
-package com.sadowbass.outerpark.application.product.dto;
+package com.sadowbass.outerpark.application.myinfo.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.sadowbass.outerpark.application.product.domain.TicketStatus;
