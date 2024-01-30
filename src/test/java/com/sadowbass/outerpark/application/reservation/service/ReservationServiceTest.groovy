@@ -8,12 +8,15 @@ import com.sadowbass.outerpark.application.product.domain.RoundSeats
 import com.sadowbass.outerpark.application.product.domain.Ticket
 import com.sadowbass.outerpark.application.product.domain.TicketStatus
 import com.sadowbass.outerpark.application.product.repository.ProductRepository
+import com.sadowbass.outerpark.application.reservation.exception.AlreadyExpiredException
 import com.sadowbass.outerpark.application.reservation.exception.AlreadyPendingException
 import com.sadowbass.outerpark.infra.session.LoginManager
 import com.sadowbass.outerpark.infra.utils.validation.exception.ValidationException
 import com.sadowbass.outerpark.presentation.dto.account.ReservationCancelRequest
 import com.sadowbass.outerpark.presentation.dto.reservation.ReservationRequest
 import spock.lang.Specification
+
+import java.time.LocalDateTime
 
 class ReservationServiceTest extends Specification {
 
@@ -112,6 +115,52 @@ class ReservationServiceTest extends Specification {
 
         then:
         thrown(AlreadyPendingException.class)
+    }
+
+    def "공연 최종 예매 성공"() {
+        given:
+        loginManager.getMember() >> loginResult
+
+        def roundId = 1
+        def pendingId = UUID.randomUUID().toString()
+
+        def expire = LocalDateTime.of(2025, 1, 1, 12, 0, 0)
+        def seats1 = new RoundSeats()
+        seats1.expire = expire
+        def seats2 = new RoundSeats()
+        seats2.expire = expire
+
+        def roundSeats = Arrays.asList(seats1, seats2);
+        productRepository.findPendingRoundSeats(loginResult.getId(), roundId, pendingId) >> roundSeats
+
+        when:
+        reservationService.reservation(roundId, pendingId)
+
+        then:
+        noExceptionThrown()
+    }
+
+    def "공연 최종 예매 실패, 결제기한 초과"() {
+        given:
+        loginManager.getMember() >> loginResult
+
+        def roundId = 1
+        def pendingId = UUID.randomUUID().toString()
+
+        def expire = LocalDateTime.of(2023, 1, 1, 12, 0, 0)
+        def seats1 = new RoundSeats()
+        seats1.expire = expire
+        def seats2 = new RoundSeats()
+        seats2.expire = expire
+
+        def roundSeats = Arrays.asList(seats1, seats2);
+        productRepository.findPendingRoundSeats(loginResult.getId(), roundId, pendingId) >> roundSeats
+
+        when:
+        reservationService.reservation(roundId, pendingId)
+
+        then:
+        thrown(AlreadyExpiredException.class)
     }
 
     def "예약 취소 성공"() {
