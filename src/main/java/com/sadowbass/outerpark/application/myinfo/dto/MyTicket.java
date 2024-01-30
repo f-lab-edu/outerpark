@@ -15,7 +15,7 @@ public class MyTicket {
     private String hallName;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
-    private LocalDateTime roundDateTime;
+    private LocalDateTime performanceDateTime;
     private String seatName;
     private String gradeName;
     private BigDecimal price;

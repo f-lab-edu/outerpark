@@ -5,10 +5,8 @@ import com.sadowbass.outerpark.application.product.dto.ProductInfo;
 import com.sadowbass.outerpark.application.product.dto.RoundInfo;
 import com.sadowbass.outerpark.application.product.exception.NoSuchProductException;
 import com.sadowbass.outerpark.application.product.service.ProductService;
-import com.sadowbass.outerpark.application.reservation.exception.AlreadyPendingException;
 import com.sadowbass.outerpark.presentation.dto.BaseResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.dao.CannotAcquireLockException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -43,11 +41,5 @@ public class ProductController {
     @ExceptionHandler(NoSuchProductException.class)
     public BaseResponse<Void> handleNoSuchProductException(NoSuchProductException exception) {
         return new BaseResponse<>(HttpStatus.BAD_REQUEST.value(), exception.getMessage(), null);
-    }
-
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler({CannotAcquireLockException.class, AlreadyPendingException.class})
-    public BaseResponse<Void> handleLockException() {
-        return new BaseResponse<>(HttpStatus.BAD_REQUEST.value(), AlreadyPendingException.EXCEPTION_MESSAGE, null);
     }
 }

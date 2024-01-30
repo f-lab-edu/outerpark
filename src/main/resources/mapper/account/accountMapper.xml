@@ -32,12 +32,10 @@
     <select id="findMyReservationsCount">
         SELECT COUNT(*)
         FROM TICKETS
-        <where>
-            AND member_id = #{memberId}
-            <if test="startDate != null">
-                AND created_date >= #{startDate}
-            </if>
-        </where>
+        WHERE member_id = #{memberId}
+        <if test="startDate != null">
+            AND created_date >= #{startDate}
+        </if>
     </select>
 
     <select id="findMyReservations" resultType="MyTicket">
@@ -51,12 +49,10 @@
         created_date as reservationDate,
         status as ticketStatus
         FROM TICKETS
-        <where>
-            AND member_id = #{memberId}
-            <if test="startDate != null">
-                AND created_date >= #{startDate}
-            </if>
-        </where>
+        WHERE member_id = #{memberId}
+        <if test="startDate != null">
+            AND created_date >= #{startDate}
+        </if>
         ORDER BY created_date DESC
         LIMIT #{page.limit} OFFSET #{page.offset}
     </select>
